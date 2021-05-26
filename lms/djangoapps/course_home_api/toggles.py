@@ -51,6 +51,12 @@ def course_home_mfe_outline_tab_is_active(course_key):
 
 
 def course_home_mfe_progress_tab_is_active(course_key):
+    # Avoiding a circular dependency
+    from .models import DisableProgressPageStackedConfig
+
+    if DisableProgressPageStackedConfig.current(course_key=course_key).disabled:
+        return False
+
     return (
         course_home_mfe_is_active(course_key) and
         COURSE_HOME_MICROFRONTEND_PROGRESS_TAB.is_enabled(course_key)
