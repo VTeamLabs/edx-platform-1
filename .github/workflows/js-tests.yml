@@ -1,0 +1,22 @@
+name: Platform JS Tests
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  run_tests:
+    name: Javascript Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run Tests
+      env:
+        TEST_SUITE: js-unit
+        SCRIPT_TO_RUN: scripts/generic-ci-tests
+      working-directory: ./scripts
+      run: bash all-tests.sh
